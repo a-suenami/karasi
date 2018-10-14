@@ -1,15 +1,13 @@
 # Karasi
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/karasi`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+**Karasi** previewable your `rails` application views without controllers implementation.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'karasi'
+gem 'karasi', group: :development
 ```
 
 And then execute:
@@ -22,7 +20,45 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### config/routes.rb
+
+#### Subdomain access with Rails engine
+```
+constraints subdomain: 'preview' do
+  mount Karasi::Engine, at: '/'
+end
+```
+
+#### Path access
+
+```
+get 'preview/*path', to: 'karasi/karasi#show'
+```
+
+### config/karasi.yml
+
+```
+hello/index:
+  title: Hello world!
+  "@message": This is example application.
+```
+
+### app/views/hello/index.erb
+
+```
+<h1><%= title %></h1>
+<p><%= @message %></p>
+```
+
+And access to `/hello/index` show to the hello messages.
+
+### Use layout
+
+Add `config/karasi.yml` to
+
+```
+layout: application
+```
 
 ## Development
 
@@ -33,3 +69,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/karasi.
+
+## TODO
+
+* helpers
